@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. Gulmira Sarsenbekovna | Телесные практики и здоровье</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="DrGulmira"/>
+  <link rel="apple-touch-icon" href="logo-gulmira.jpeg"/>
+
+  <style>
+    /* =============== Design System =============== */
+    :root{
+      --bg:#0f172a;
+      --ink:#020617;
+      --text:#1f2933;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+
+      --card:#ffffff;
+      --panel:#f9fafb;
+      --soft:#ecfdf5;
+
+      --brand:#0f766e;
+      --brand-2:#14b8a6;
+      --accent:#3b82f6;
+
+      --ok:#22c55e; --warn:#eab308; --bad:#ef4444;
+
+      --r:16px; --r-lg:20px;
+      --shadow:0 10px 25px rgba(15,23,42,.14);
+      --shadow-lg:0 22px 55px rgba(15,23,42,.25);
+      --ease: cubic-bezier(.2,.7,.2,1);
+
+      --container:1280px;
+
+      /* Gradients */
+      --grad-brand: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+      --grad-accent: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      --grad-green: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    }
+
+    html { scroll-behavior:smooth; }
+    * { box-sizing: border-box; }
+    body{
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      margin:0; color:var(--text); background:#f3f4f6; line-height:1.6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    .container{ width:100%; max-width:var(--container); margin:0 auto; padding:0 24px; }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:1000; backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.9); border-bottom:1px solid rgba(15,23,42,.06);
+    }
+    .navbar{ display:flex; align-items:center; gap:20px; padding:14px 0; }
+    .logo{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); font-weight:800; font-size:1.25rem; letter-spacing:-.02em; }
+    .logo img{ width:42px; height:42px; object-fit:cover; border-radius:14px; box-shadow:0 4px 12px rgba(15,23,42,.18); }
+    .nav-links{ display:flex; gap:18px; margin-left:20px; }
+    .nav-links a{ position:relative; text-decoration:none; color:var(--muted); font-weight:500; padding:8px 10px; border-radius:999px; font-size:.95rem; }
+    .nav-links a:hover{ color:var(--brand); background:rgba(15,118,110,.06); }
+    .user-actions{ margin-left:auto; display:flex; gap:12px; align-items:center; }
+    .chip{ display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:rgba(15,118,110,.06); font-size:.9rem; }
+    .chip i{ color:#fff; background:var(--grad-brand); width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:999px; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 18px;
+      border:0; border-radius:999px; font-weight:600; cursor:pointer; text-decoration:none;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), opacity .2s var(--ease), background .2s var(--ease);
+      font-size:.95rem;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn-primary{ background:var(--grad-brand); color:#fff; box-shadow: var(--shadow); }
+    .btn-outline{ border:1px solid var(--brand); color:var(--brand); background:#ecfdf5; }
+    .btn-soft{ background:rgba(15,118,110,.06); color:var(--brand); }
+    .btn-accent{ background:var(--grad-accent); color:#fff; }
+    .btn-green{ background:var(--grad-green); color:#fff; }
+
+    /* Pages */
+    .page{ display:none; opacity:0; transform: translateY(12px); transition: all .35s var(--ease); }
+    .page.active{ display:block; opacity:1; transform:none; }
+
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; padding:90px 0 80px;
+      background: radial-gradient(circle at top left, #ecfdf5 0%, #e0f2fe 40%, #ffffff 80%);
+    }
+    .hero::before{
+      content:''; position:absolute; inset:auto -80px -140px; height:260px;
+      background: radial-gradient(circle at top, rgba(15,118,110,.08) 0, transparent 55%);
+      opacity:.7; pointer-events:none;
+    }
+    .hero-grid{
+      position:relative; display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:40px; align-items:center;
+    }
+    .hero-tag{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 12px;
+      border-radius:999px; background:#ecfdf5; color:#047857; font-size:.8rem; font-weight:600;
+      text-transform:uppercase; letter-spacing:.08em;
+    }
+    .hero-tag span.icon{
+      width:20px; height:20px; border-radius:999px; background:var(--grad-brand);
+      display:flex; align-items:center; justify-content:center; color:#ecfdf5;
+    }
+    .hero h1{
+      margin:16px 0 10px; font-size: clamp(28px, 4.2vw, 46px); font-weight:900; letter-spacing:-.03em;
+      color:var(--ink);
+    }
+    .hero h1 span.gradient{
+      background: linear-gradient(120deg, #0f766e, #14b8a6, #22c55e); -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero-sub{ font-size:clamp(16px, 2.5vw, 18px); color:var(--muted); max-width:540px; margin-bottom:20px; }
+    .hero-meta{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:24px; font-size:.9rem; color:#4b5563; }
+    .hero-meta span{ display:inline-flex; align-items:center; gap:6px; }
+    .hero-meta i{ color:#0f766e; }
+    .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+
+    .hero-note{ font-size:.85rem; color:#64748b; margin-top:8px; }
+
+    .hero-photo-card{
+      position:relative; border-radius:28px; background:#0f172a; padding:18px; box-shadow:0 25px 70px rgba(15,23,42,.55);
+      color:#e5e7eb; overflow:hidden;
+    }
+    .hero-photo-inner{
+      position:relative; border-radius:22px; background: radial-gradient(circle at top, #22c55e 0, #0f172a 40%, #020617 100%);
+      padding:16px; display:grid; gap:14px;
+    }
+    .hero-avatar-wrap{
+      display:flex; align-items:flex-end; gap:16px;
+    }
+    .hero-avatar{
+      width:120px; height:120px; border-radius:999px; overflow:hidden; border:2px solid rgba(236,253,245,.6);
+      background: radial-gradient(circle at top, #16a34a 0, #15803d 40%, #064e3b 100%);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .hero-avatar img{
+      width:100%; height:100%; object-fit:cover;
+    }
+    .hero-avatar-placeholder{
+      font-size:48px; color:#ecfdf5;
+    }
+    .hero-doc-info strong{ display:block; font-weight:800; letter-spacing:-.01em; font-size:1rem; }
+    .hero-doc-info span.role{ font-size:.9rem; color:#a5b4fc; }
+    .hero-doc-info span.exp{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; margin-top:4px; color:#bbf7d0; }
+
+    .hero-chip-row{
+      display:flex; flex-wrap:wrap; gap:8px; font-size:.8rem; margin-top:6px;
+    }
+    .hero-chip{
+      border-radius:999px; padding:6px 10px; background:rgba(15,118,110,.18); border:1px solid rgba(34,197,94,.4);
+    }
+    .hero-bottom-row{
+      display:flex; justify-content:space-between; gap:12px; align-items:center; font-size:.8rem; margin-top:6px; color:#9ca3af;
+    }
+    .hero-stat{ display:flex; align-items:center; gap:8px; }
+    .hero-stat strong{ font-size:1rem; color:#f9fafb; }
+
+    /* Sections */
+    .section{ padding:60px 0; }
+    .section-title{ text-align:center; margin-bottom:28px; }
+    .section-title h2{ font-size: clamp(22px, 3.5vw, 34px); color:var(--ink); margin:0 0 8px; font-weight:800; letter-spacing:-.02em; }
+    .section-title p{ color:var(--muted); margin:0 auto; max-width:740px; font-size:.98rem; }
+
+    /* Cards */
+    .grid{ display:grid; gap:22px; }
+    .grid.modules{ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+    .card{
+      background:var(--card); border:1px solid rgba(148,163,184,.3); border-radius: var(--r-lg);
+      box-shadow: 0 18px 45px rgba(15,23,42,.08); overflow:hidden; display:flex; flex-direction:column;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+    .card:hover{
+      transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color:rgba(34,197,94,.55);
+    }
+
+    .card-h{
+      position:relative; height:210px; display:flex; align-items:flex-end; justify-content:space-between;
+      overflow:hidden; background: radial-gradient(circle at top left,#ecfdf5 0,#e5e7eb 55%,#e5e7eb 100%);
+    }
+    .card-h img.module-cover{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      filter:brightness(.76); transform:scale(1.03); transition: transform .5s var(--ease), filter .4s var(--ease);
+    }
+    .card:hover .card-h img.module-cover{
+      transform:scale(1.06); filter:brightness(.9);
+    }
+    .card-h-overlay{
+      position:relative; z-index:2; width:100%; padding:14px 18px;
+      display:flex; justify-content:space-between; align-items:flex-end;
+      background: linear-gradient(to top, rgba(15,23,42,.75) 0%, transparent 70%);
+    }
+
+    .module-tag{
+      background:rgba(15,118,110,.9); color:#ecfdf5;
+      padding:6px 12px; border-radius:999px; font-weight:700; font-size:.8rem; display:inline-flex; align-items:center; gap:6px;
+    }
+    .module-tag i{ font-size:.9rem; }
+
+    .lesson-num{
+      width:64px; height:64px; border-radius:999px;
+      display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.3rem; color:#ecfdf5;
+      background: radial-gradient(circle at top, #22c55e 0, #16a34a 40%, #065f46 100%);
+      box-shadow:0 12px 30px rgba(22,163,74,.7);
+    }
+
+    .cover-placeholder{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      background: radial-gradient(circle at top, #bbf7d0 0,#dcfce7 35%,#e5e7eb 90%);
+      color:#047857; font-size:2.6rem;
+    }
+
+    .card-b{ padding:20px 20px 18px; display:flex; flex-direction:column; gap:12px; }
+    .card-b h3{ margin:0; color:#020617; font-size:1.1rem; font-weight:800; letter-spacing:-.01em; }
+    .card-b p{ margin:0; color:#4b5563; line-height:1.7; font-size:.95rem; }
+    .meta{ display:flex; gap:12px; align-items:center; color:#0f766e; font-weight:600; font-size:.88rem; }
+
+    /* Payment */
+    .pay-wrap{
+      max-width:760px; margin:0 auto; background:var(--card);
+      border:1px solid rgba(148,163,184,.4); border-radius:var(--r-lg);
+      padding:32px; box-shadow: var(--shadow-lg);
+    }
+    .steps{ display:flex; gap:16px; align-items:center; justify-content:center; margin:20px 0 28px; position:relative; }
+    .steps::before{ content:''; position:absolute; top:24px; left:10%; right:10%; height:3px; background:#e5e7eb; }
+    .step{ z-index:1; display:flex; flex-direction:column; align-items:center; gap:8px; font-size:.88rem; color:#6b7280; }
+    .step-badge{ width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#e5e7eb; color:#6b7280; font-weight:800; }
+    .step.active .step-badge{ background: var(--grad-brand); color:#ecfdf5; }
+    .step.active{ color:#0f766e; }
+
+    .info{
+      display:grid; grid-template-columns:1fr 1.3fr; gap:10px 22px;
+      background:#f9fafb; border:1px dashed #d4d4d8; border-radius:16px; padding:18px;
+      font-size:.93rem;
+    }
+    .info .k{ color:#6b7280; } .info .v{ color:#020617; font-weight:700; }
+
+    .upload{
+      border:2px dashed #d4d4d8; border-radius:16px; padding:26px; text-align:center;
+      background:#fafafa; margin-bottom:16px;
+      cursor:pointer;
+      transition:border-color .2s var(--ease), background .2s var(--ease);
+    }
+    .upload:hover{ border-color:var(--brand); background:rgba(16,185,129,.04); }
+
+    /* Video Page */
+    .video-wrap{ max-width:980px; margin:0 auto; display:grid; gap:18px; }
+    .video-box{ position:relative; width:100%; padding-bottom:56.25%; height:0; border-radius:18px; overflow:hidden; background:#020617; box-shadow: var(--shadow-lg); }
+    .video-box iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    .v-head{ display:block; gap:12px; justify-content:space-between; }
+    .v-title{ font-weight:900; letter-spacing:-.01em; color:#020617; font-size: clamp(18px, 3vw, 26px); margin:0 0 4px; }
+    .v-desc{ color:#6b7280; margin:0 0 10px; font-size:.95rem; }
+    .v-nav{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    .comments{
+      background:#ffffff; border:1px solid rgba(148,163,184,.4); border-radius:18px;
+      padding:18px; display:grid; gap:12px; box-shadow:0 10px 30px rgba(15,23,42,.06);
+    }
+    .comment{ padding:12px; background:#f9fafb; border-left:4px solid #0f766e; border-radius:12px; }
+    .comment .a{ font-weight:700; color:#020617; margin-bottom:6px; display:flex; gap:8px; align-items:center; font-size:.9rem; }
+    .comment .t{ color:#111827; font-size:.92rem; }
+    .c-new textarea{
+      width:100%; min-height:90px; border-radius:12px; border:1px solid #d4d4d8; padding:12px;
+      background:#f9fafb; font: inherit; font-size:.94rem;
+    }
+    .c-new textarea:focus{ outline: 3px solid rgba(56,189,248,.22); background:#ffffff; }
+
+    /* Public comments grid */
+    .pub-comments{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:16px; }
+    .pub-comments .comment{ background:#ffffff; }
+
+    /* Footer */
+    footer{
+      margin-top:60px; padding:50px 0 26px;
+      color:#e5e7eb;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #020617 100%);
+    }
+    .f-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:28px; }
+    .f-title{ font-weight:800; font-size:1.1rem; margin-bottom:12px; letter-spacing:-.01em; }
+    .f-links{ list-style:none; padding:0; margin:0; display:grid; gap:8px; font-size:.93rem; }
+    .f-links a{ color:rgba(241,245,249,.9); text-decoration:none; }
+    .f-links a:hover{ text-decoration:underline; }
+    .social{ display:flex; gap:10px; margin-top:10px; }
+    .social a{
+      width:42px; height:42px; display:grid; place-items:center;
+      border-radius:999px; background:rgba(15,23,42,.66); color:#e5e7eb;
+      border:1px solid rgba(148,163,184,.5);
+      transition:background .2s var(--ease), transform .2s var(--ease);
+    }
+    .social a:hover{ background:var(--grad-brand); transform:translateY(-1px); }
+
+    /* Modal */
+    .modal{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(15,23,42,.55); backdrop-filter: blur(7px); z-index:2000; opacity:0; visibility:hidden; transition: all .3s var(--ease); }
+    .modal.active{ opacity:1; visibility:visible; }
+    .modal-card{
+      width:min(94vw,420px); background:#ffffff; border-radius:22px; box-shadow: var(--shadow-lg); padding:26px 24px;
+      transform: translateY(8px) scale(.98); transition: all .32s var(--ease);
+    }
+    .modal.active .modal-card{ transform:none; }
+    .modal-h{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .x{ background:transparent; border:0; font-size:22px; color:#9ca3af; cursor:pointer; }
+
+    .field{ display:grid; gap:8px; margin:12px 0; }
+    .label{ font-weight:600; color:#111827; font-size:.9rem; }
+    .input{
+      height:46px; border:1px solid #d4d4d8; border-radius:999px; padding:0 14px; font: inherit; background:#f9fafb;
+      font-size:.95rem;
+    }
+    .input:focus{ outline: 3px solid rgba(34,197,94,.26); background:#ffffff; }
+
+    /* Notifications */
+    .toast{
+      position:fixed; top:22px; right:22px; z-index:3000; display:flex; align-items:center; gap:10px;
+      padding:10px 14px; color:#f9fafb; border-radius:999px; box-shadow: var(--shadow-lg); transform: translateX(140%); transition: transform .35s var(--ease), opacity .25s var(--ease);
+      font-size:.9rem;
+    }
+    .toast.in{ transform:none; }
+    .toast.info{ background:#0ea5e9; } .toast.success{ background:#16a34a; } .toast.error{ background:#ef4444; }
+
+    /* Mobile fullscreen helper */
+    .vh-100{ height: 100dvh; }
+
+    /* Floating refresh */
+    .fab-refresh{
+      position: fixed;
+      right: max(16px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      width:52px; height:52px; border:0; border-radius:999px;
+      background:var(--grad-brand); color:#f9fafb; display:grid; place-items:center;
+      box-shadow: var(--shadow-lg); z-index:2500; cursor:pointer;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), opacity .2s var(--ease);
+    }
+    .fab-refresh:hover{ transform: translateY(-2px); }
+    .fab-refresh.spin i{ animation: spin .8s linear infinite; }
+    @keyframes spin { to{ transform: rotate(360deg); } }
+
+    /* Loader */
+    .loader {
+      position: fixed; inset: 0;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(7px);
+      z-index: 4000;
+      opacity: 0; visibility: hidden;
+      transition: opacity .25s var(--ease), visibility .25s var(--ease);
+    }
+    .loader.in { opacity: 1; visibility: visible; }
+    .loader .box {
+      display: grid; gap: 12px; place-items: center;
+      padding: 18px 22px; border-radius: 18px;
+      background: #ffffff; border: 1px solid #e5e7eb; box-shadow: var(--shadow-lg);
+      color: #111827; font-weight: 700; font-size:.95rem;
+    }
+    .loader .spin {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 3px solid #e5e7eb; border-top-color: #0f766e;
+      animation: loaderSpin .8s linear infinite;
+    }
+    @keyframes loaderSpin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: minmax(0,1fr); gap:32px; }
+      .hero{ padding-top:70px; }
+      .hero-photo-card{ max-width:420px; margin:0 auto; }
+    }
+    @media (max-width: 768px){
+      .nav-links{ display:none; }
+      .steps{ flex-direction:column; gap:14px; }
+      .steps::before{ display:none; }
+      .info{ grid-template-columns:1fr; }
+      .v-nav .btn{ flex:1 1 auto; justify-content:center; }
+      .hero-actions{ flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:480px){
+      .hero{ padding-top:60px; }
+      .hero-avatar{ width:96px; height:96px; }
+      .lesson-num{ width:56px; height:56px; font-size:1.15rem; }
+      .card-b{ padding:16px 16px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- ======================== Main Page ======================== -->
+    <div id="page-home" class="page active" role="region" aria-label="Главная страница">
+      <header>
+        <div class="container">
+          <nav class="navbar" aria-label="Верхняя навигация">
+            <a href="#/" class="logo">
+              <img src="logo-gulmira.jpeg" alt="Доктор Гульмира логотип"/>
+              <span>Dr. Gulmira</span>
+            </a>
+            <div class="nav-links" role="navigation">
+              <a href="#/" aria-current="page">Главная</a>
+              <a href="#/modules">Онлайн-программы</a>
+              <a href="#/about">О докторе</a>
+              <a href="#/contacts">Контакты</a>
+            </div>
+            <div class="user-actions">
+              <div id="chipUser" class="chip" style="display:none">
+                <i class="fas fa-user"></i><b id="chipName">Гость</b>
+              </div>
+              <button id="btnLogin" class="btn btn-outline"><i class="fas fa-lock"></i> Войти</button>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="container hero-grid">
+          <!-- Left: text -->
+          <div>
+            <div class="hero-tag">
+              <span class="icon"><i class="fas fa-heartbeat"></i></span>
+              <span>35-летний врачебный опыт</span>
+            </div>
+            <h1>
+              От <span class="gradient">напряжения и боли</span><br/>
+              к спокойному, живому телу
+            </h1>
+            <p class="hero-sub">
+              Телесные практики, гирудотерапия, точечный и висцеральный массаж от доктора-практика с 35-летним стажем.
+              Поддержка нервной системы, внутренних органов и общего самочувствия.
+            </p>
+            <div class="hero-meta">
+              <span><i class="fas fa-user-md"></i> Доктор Гульмира Сарсенбековна</span>
+              <span><i class="fas fa-map-marker-alt"></i> Bilis Nurpeisova 16, Kyzylorda</span>
+              <span><i class="fab fa-instagram"></i> @dr.gulmira_sarsenbekovna</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://wa.me/77778874427" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> Записаться на консультацию
+              </a>
+              <a class="btn btn-soft" href="https://www.instagram.com/dr.gulmira_sarsenbekovna" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> Смотреть профиль
+              </a>
+              <button id="btnInstall" class="btn btn-soft" style="display:none;">
+                <i class="fas fa-download"></i> Установить как приложение
+              </button>
+            </div>
+            <div class="hero-note">
+              Онлайн-доступ к видеоурокам и материалам открывается после подтверждения оплаты администратором.
+            </div>
+          </div>
+
+          <!-- Right: doctor photo card -->
+          <div class="hero-photo-card">
+            <div class="hero-photo-inner">
+              <div class="hero-avatar-wrap">
+                <div class="hero-avatar">
+                  <!-- Поставь сюда реальное фото доктора -->
+                  <!-- <img src="dr-gulmira-photo.jpeg" alt="Доктор Гульмира"> -->
+                  <div class="hero-avatar-placeholder">
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                </div>
+                <div class="hero-doc-info">
+                  <strong>Dr. Gulmira Sarsenbekovna</strong>
+                  <span class="role">Телесный практик, врач с 35-летним стажем</span>
+                  <span class="exp"><i class="fas fa-stethoscope"></i> Медицина и здоровье • практическая терапия тела</span>
+                  <div class="hero-chip-row">
+                    <div class="hero-chip">Гирудотерапия</div>
+                    <div class="hero-chip">Телесные практики</div>
+                    <div class="hero-chip">Точечный массаж</div>
+                    <div class="hero-chip">Висцеральный массаж</div>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-bottom-row">
+                <div class="hero-stat">
+                  <i class="fas fa-users"></i>
+                  <div><strong>11K+</strong><br/>подписчиков следят за практикой</div>
+                </div>
+                <div class="hero-stat">
+                  <i class="fas fa-clock"></i>
+                  <div>Приём по предварительной записи<br/>через WhatsApp</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Модули / программы -->
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Онлайн-программы и модули</h2>
+            <p>
+              Записанные уроки и практики доктора Гульмиры по работе с телом, нервной системой и внутренними органами.
+              У каждого модуля — отдельная программа и своя обложка.
+            </p>
+          </div>
+          <div id="modulesGrid" class="grid modules" aria-live="polite">
+            <div class="card" style="padding:30px; text-align:center;">
+              <i class="fas fa-spinner fa-spin"></i> Модули загружаются…
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Отзывы -->
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Отзывы и комментарии</h2>
+            <p>Истории и впечатления людей, которые прошли практики, лекции и телесные упражнения.</p>
+          </div>
+          <div id="publicComments" class="pub-comments" aria-live="polite">
+            <div class="card" style="padding:30px; text-align:center;">
+              <i class="fas fa-spinner fa-spin"></i> Отзывы загружаются…
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="f-grid">
+            <div>
+              <div class="f-title">Dr. Gulmira</div>
+              <p>
+                Телесные практики, гирудотерапия, точечный и висцеральный массаж.
+                Осознанная забота о здоровье через работу с телом.
+              </p>
+              <div class="social">
+                <a href="https://www.instagram.com/dr.gulmira_sarsenbekovna" target="_blank" rel="noopener" aria-label="Instagram">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/77778874427" target="_blank" rel="noopener" aria-label="WhatsApp">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+            <div>
+              <div class="f-title">Навигация</div>
+              <ul class="f-links">
+                <li><a href="#/">Главная</a></li>
+                <li><a href="#/modules">Онлайн-программы</a></li>
+                <li><a href="#/about">О докторе</a></li>
+                <li><a href="#/contacts">Контакты</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="f-title">Связаться</div>
+              <ul class="f-links">
+                <li><a href="https://wa.me/77778874427" target="_blank" rel="noopener">WhatsApp: +7 777 887 44 27</a></li>
+                <li>Bilis Nurpeisova 16, Kyzylorda 120008</li>
+                <li>Приём по записи</li>
+              </ul>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:22px; opacity:.85; font-size:.86rem;">
+            &copy; 2025 Dr. Gulmira. Все права защищены.
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ======================== Lessons Page (list) ======================== -->
+    <div id="page-lessons" class="page" role="region" aria-label="Список уроков">
+      <header>
+        <div class="container">
+          <nav class="navbar">
+            <a href="#/" class="logo">
+              <i class="fas fa-arrow-left"></i><span> Назад</span>
+            </a>
+            <div class="nav-links"></div>
+            <div class="user-actions">
+              <div id="chipUser2" class="chip" style="display:none">
+                <i class="fas fa-user"></i><b id="chipName2">Гость</b>
+              </div>
+              <button id="btnLogin2" class="btn btn-outline"><i class="fas fa-lock"></i> Войти</button>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2 id="lessonsModuleTitle">Уроки модуля</h2>
+            <p id="lessonsModuleDesc">Выберите урок, чтобы начать просмотр и практику</p>
+          </div>
+          <div id="lessonsGrid" class="grid modules" aria-live="polite">
+            <div class="card" style="padding:30px; text-align:center;">
+              <i class="fas fa-spinner fa-spin"></i> Уроки загружаются…
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="f-grid">
+            <div>
+              <div class="f-title">Dr. Gulmira</div>
+              <p>Практическая медицина, телесные практики и мягкая поддержка организма.</p>
+              <div class="social">
+                <a href="https://www.instagram.com/dr.gulmira_sarsenbekovna" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/77778874427" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+              </div>
+            </div>
+            <div>
+              <div class="f-title">Навигация</div>
+              <ul class="f-links">
+                <li><a href="#/">Главная</a></li>
+                <li><a href="#/modules">Онлайн-программы</a></li>
+                <li><a href="#/about">О докторе</a></li>
+                <li><a href="#/contacts">Контакты</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="f-title">Контакты</div>
+              <ul class="f-links">
+                <li><a href="https://wa.me/77778874427" target="_blank" rel="noopener">WhatsApp: +7 777 887 44 27</a></li>
+                <li>Bilis Nurpeisova 16, Kyzylorda 120008</li>
+              </ul>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:22px; opacity:.85; font-size:.86rem;">
+            &copy; 2025 Dr. Gulmira. Все права защищены.
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ======================== Lesson View (single) ======================== -->
+    <div id="page-lesson" class="page" role="region" aria-label="Экран урока">
+      <header>
+        <div class="container">
+          <nav class="navbar">
+            <a id="linkBackToLessons" href="#/" class="logo">
+              <i class="fas fa-arrow-left"></i><span> Уроки</span>
+            </a>
+            <div class="user-actions">
+              <div id="chipUser3" class="chip" style="display:none"><i class="fas fa-user"></i><b id="chipName3">Гость</b></div>
+              <button id="btnLogin3" class="btn btn-outline"><i class="fas fa-lock"></i> Войти</button>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container">
+          <div class="video-wrap">
+            <div class="v-head">
+              <div>
+                <h1 id="lessonTitle" class="v-title">Урок</h1>
+                <p id="lessonDesc" class="v-desc"></p>
+              </div>
+              <div class="v-nav">
+                <a id="btnPdf" class="btn btn-soft" href="#" target="_blank" rel="noopener" style="display:none;">
+                  <i class="fas fa-file-pdf"></i> Материалы к уроку
+                </a>
+                <a id="btnExternal" class="btn btn-soft" href="#" target="_blank" rel="noopener" style="display:none;">
+                  <i class="fas fa-external-link-alt"></i> Открыть отдельно
+                </a>
+              </div>
+            </div>
+
+            <div class="video-box">
+              <iframe id="lessonFrame" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen playsinline></iframe>
+            </div>
+
+            <div class="v-nav">
+              <button id="btnPrev" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Предыдущий</button>
+              <button id="btnNext" class="btn btn-primary">Следующий <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <div class="comments">
+              <div id="commentsList" aria-live="polite"></div>
+              <div id="newComment" class="c-new" style="display:none;">
+                <textarea id="commentInput" placeholder="Оставьте отзыв или вопрос по уроку…" aria-label="Комментарий"></textarea>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                  <button id="sendComment" class="btn btn-green">
+                    <i class="fas fa-paper-plane"></i> Отправить
+                  </button>
+                </div>
+              </div>
+              <div id="needLogin" style="display:none; color:#6b7280; font-size:.9rem;">
+                Чтобы оставить комментарий, войдите в личный кабинет.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================== Payment / Access Page ======================== -->
+    <div id="page-payment" class="page" role="region" aria-label="Доступ и оплата">
+      <header>
+        <div class="container">
+          <nav class="navbar">
+            <a href="#/" class="logo"><i class="fas fa-arrow-left"></i><span> Назад</span></a>
+            <div class="nav-links"></div>
+          </nav>
+        </div>
+      </header>
+
+      <section class="section vh-100" style="display:grid; place-items:center;">
+        <div class="container">
+          <div class="pay-wrap">
+            <div style="text-align:center;">
+              <div style="font-size:42px; line-height:0; margin-bottom:14px; background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent;">
+                <i class="fas fa-unlock-alt"></i>
+              </div>
+              <h2 style="margin:0 0 6px; color:#020617; font-size:clamp(22px,3.3vw,30px);">
+                Доступ к онлайн-материалам
+              </h2>
+              <p style="margin:0; color:var(--muted); font-size:.95rem;">
+                После оплаты администратор откроет доступ ко всем урокам выбранного модуля.
+              </p>
+            </div>
+
+            <div class="steps">
+              <div class="step active"><div class="step-badge">1</div><div class="step-title">Запросить стоимость</div></div>
+              <div class="step"><div class="step-badge">2</div><div class="step-title">Отправить чек</div></div>
+              <div class="step"><div class="step-badge">3</div><div class="step-title">Получить доступ</div></div>
+            </div>
+
+            <div class="info" style="margin-bottom:18px;">
+              <div class="k">Программа:</div><div id="payCourse" class="v">Онлайн-практики для тела</div>
+              <div class="k">Модуль:</div><div id="payModule" class="v">Выбранный модуль</div>
+              <div class="k">Стоимость:</div><div class="v">Уточните у администратора в WhatsApp</div>
+            </div>
+
+            <div style="display:flex; gap:10px; justify-content:center; margin-bottom:22px; flex-wrap:wrap;">
+              <a href="https://wa.me/77778874427" class="btn btn-primary" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> Написать в WhatsApp по оплате
+              </a>
+            </div>
+
+            <div class="upload" id="uploadArea" role="button" tabindex="0" aria-label="Загрузить чек">
+              <div style="font-size:30px; color:var(--brand); margin-bottom:8px;"><i class="fas fa-cloud-upload-alt"></i></div>
+              <div style="font-weight:700">Перетащите сюда файл или нажмите, чтобы прикрепить чек</div>
+              <div style="color:var(--muted); font-size:.9rem;">JPG, PNG, PDF (до 5MB)</div>
+            </div>
+
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+              <a class="btn btn-accent" href="https://wa.me/77778874427" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> Отправить чек администратору
+              </a>
+              <button id="sendReceipt" class="btn btn-green">
+                <i class="fas fa-paper-plane"></i> Подтвердить отправку
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================== Auth Modal ======================== -->
+    <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <div class="modal-card">
+        <div class="modal-h">
+          <h3 id="authTitle" style="margin:0; font-weight:900; letter-spacing:-.01em; color:#020617;">Вход в личный кабинет</h3>
+          <button id="authClose" class="x" aria-label="Закрыть">&times;</button>
+        </div>
+        <p style="margin:4px 0 12px; font-size:.86rem; color:#6b7280;">
+          Личный кабинет нужен для доступа к закрытым урокам и комментариям.
+        </p>
+        <div class="field">
+          <label class="label" for="loginPhone">Телефон</label>
+          <input id="loginPhone" class="input" type="tel" placeholder="Например, 8777..." required/>
+        </div>
+        <div class="field">
+          <label class="label" for="loginPass">Пароль</label>
+          <input id="loginPass" class="input" type="password" placeholder="Ваш пароль" required/>
+        </div>
+        <button id="authSubmit" class="btn btn-primary" style="width:100%; margin-top:8px;">
+          <i class="fas fa-sign-in-alt"></i> Войти
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global loader (переместили выше скрипта, чтобы точно был в DOM) -->
+  <div id="appLoader" class="loader" aria-hidden="true" aria-label="Загрузка">
+    <div class="box">
+      <div class="spin" aria-hidden="true"></div>
+      <div>Загружаем материалы…</div>
+    </div>
+  </div>
+
+  <!-- Floating refresh -->
+  <button id="refreshBtn" class="fab-refresh" aria-label="Обновить страницу" title="Обновить">
+    <i class="fas fa-rotate-right"></i>
+  </button>
+
+  <!-- ======================== App (type=module) ======================== -->
+  <script type="module">
+    /* =========================================================
+       CORE: constants & utils
+    ========================================================= */
+    // TODO: подставь сюда ID гугл-таблицы для курсов Dr. Gulmira
+    const SESS_URL   = 'https://script.google.com/macros/s/AKfycbyMohlt3z7HnPE_csp6pbeqG4hBHjK5XbiRAXNZrFtzZjwxHpHSOoNHsHPti9oXDC5wcw/exec';
+    const COMMENT_URL= 'https://script.google.com/macros/s/AKfycbzXzGw70Ni6rwYL58EN2IgDDHXZyIBoYEauvpoC5zrVQkFyPQmABxNnGOkw-bFXpCTU3Q/exec';
+    const CONFIG = {
+      spreadsheetId: '1ZCrJaBfflCkemGIklThtGSpDtd4gNGNan4TaiUWQTcA',
+      sheets: { modules:'Модули', lessons:'Видеоуроки', users:'Юзеры', comments:'comment' }
+    };
+
+    const qs = (sel,root=document)=> root.querySelector(sel);
+    const qsa=(sel,root=document)=> [...root.querySelectorAll(sel)];
+    const sleep = (ms)=> new Promise(r=>setTimeout(r,ms));
+
+    const Loader = {
+      el: null,
+      ensure(){
+        if (!this.el) {
+          this.el = qs('#appLoader');
+          if (!this.el) {
+            // если по какой-то причине нет, создаём минимальный
+            const d = document.createElement('div');
+            d.id='appLoader';
+            d.className='loader';
+            d.innerHTML = '<div class="box"><div class="spin"></div><div>Загрузка…</div></div>';
+            document.body.appendChild(d);
+            this.el = d;
+          }
+        }
+        return this.el;
+      },
+      show(){ const el = this.ensure(); el.classList.add('in'); el.setAttribute('aria-hidden','false'); },
+      hide(){ const el = this.ensure(); el.classList.remove('in'); el.setAttribute('aria-hidden','true'); }
+    };
+
+    const notify = (msg, type='info')=>{
+      const n = document.createElement('div');
+      n.className = \`toast \${type}\`;
+      n.innerHTML = \`<i class="fas fa-\${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'}"></i>\${msg}\`;
+      document.body.appendChild(n);
+      requestAnimationFrame(()=> n.classList.add('in'));
+      setTimeout(()=>{ n.classList.remove('in'); setTimeout(()=> n.remove(), 300)}, 3800);
+    };
+
+    // YouTube helpers
+    const isYoutube = (url)=>{
+      try{ const h=new URL(url).hostname.replace(/^www\\./,''); return ['youtube.com','m.youtube.com','youtu.be'].includes(h); }
+      catch{ return /youtu\\.be|youtube\\.com/.test(url||''); }
+    };
+    const ytId = (url)=>{
+      try{
+        const u = new URL(url);
+        if (u.hostname.includes('youtu.be')) return u.pathname.slice(1);
+        if (u.pathname==='/watch') return u.searchParams.get('v');
+        const m1=u.pathname.match(/\\/embed\\/([^/?]+)/); if(m1) return m1[1];
+        const m2=u.pathname.match(/\\/live\\/([^/?]+)/);  if(m2) return m2[1];
+        const m3=u.pathname.match(/\\/shorts\\/([^/?]+)/);if(m3) return m3[1];
+        return u.searchParams.get('v') || null;
+      }catch{
+        let m; if((m=url.match(/[?&]v=([\\w-]{6,})/))) return m[1];
+        if((m=url.match(/youtu\\.be\\/([\\w-]{6,})/))) return m[1];
+        if((m=url.match(/\\/embed\\/([\\w-]{6,})/))) return m[1];
+        if((m=url.match(/\\/live\\/([\\w-]{6,})/))) return m[1];
+        return null;
+      }
+    };
+    const ytStart = (url)=>{
+      try{
+        const u=new URL(url); const t=u.searchParams.get('t')||u.searchParams.get('start')||'';
+        if(!t) return 0;
+        if(/^\\d+$/.test(t)) return parseInt(t,10);
+        const m = /(\\d+)m/.exec(t)?.[1]; const s = /(\\d+)s/.exec(t)?.[1];
+        return (parseInt(m||'0',10)*60 + parseInt(s||'0',10))||0;
+      }catch{ return 0; }
+    };
+    const ytEmbed = (url)=>{
+      const id = ytId(url); if(!id) return '';
+      const s = ytStart(url); return \`https://www.youtube.com/embed/\${id}?rel=0&modestbranding=1&playsinline=1\${s?\`&start=\${s}\`:''}\`;
+    };
+
+    // Drive helpers
+    const driveId = (url)=>{
+      if(!url) return '';
+      const ps=[/\\/d\\/([A-Za-z0-9_-]+)/,/\\/file\\/d\\/([A-Za-z0-9_-]+)/,/id=([A-Za-z0-9_-]+)/,/([A-Za-z0-9_-]{25,})/];
+      for(const p of ps){ const m=url.match(p); if(m&&m[1]) return m[1]; }
+      return '';
+    };
+    const driveEmbed = (url)=> driveId(url) ? \`https://drive.google.com/file/d/\${driveId(url)}/preview\` : '';
+    const driveView  = (url)=> driveId(url) ? \`https://drive.google.com/file/d/\${driveId(url)}/view\`    : '';
+    const pdfPreview = (url)=> {
+      const id = driveId(url);
+      return id ? \`https://drive.google.com/file/d/\${id}/preview\` : (url||'');
+    };
+
+    /* =========================================================
+       SERVICES: sheets / session / comments
+    ========================================================= */
+    const Sheets = {
+      async _fetch(sheet){
+        const url=\`https://docs.google.com/spreadsheets/d/\${CONFIG.spreadsheetId}/gviz/tq?sheet=\${encodeURIComponent(sheet)}&tqx=out:json\`;
+        const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error(res.status);
+        const txt=await res.text(); const json=JSON.parse(txt.slice(txt.indexOf('{'), txt.lastIndexOf('}')+1));
+        return json.table.rows.map(r=>{
+          const o={}; r.c.forEach((cell,i)=>{ const k=json.table.cols[i].label.trim(); o[k]=cell&&cell.v!=null?String(cell.v).trim():'';}); return o;
+        });
+      },
+      modules(){ return this._fetch(CONFIG.sheets.modules); },
+      lessons(){ return this._fetch(CONFIG.sheets.lessons); },
+      comments(){ return this._fetch(CONFIG.sheets.comments); },
+    };
+
+    const Session = {
+      key:'eduplatform_user',
+      user:null,
+      hb:null,
+
+      load(){
+        const raw = localStorage.getItem(this.key);
+        if(!raw) return null;
+        try{ this.user = JSON.parse(raw); return this.user; }catch{ return null; }
+      },
+      save(u){ this.user=u; localStorage.setItem(this.key, JSON.stringify(u)); },
+      clear(){ this.user=null; localStorage.removeItem(this.key); if(this.hb) clearInterval(this.hb); this.hb=null; },
+
+      async login(login, password){
+        const res = await fetch(\`\${SESS_URL}?action=login&login=\${encodeURIComponent(login)}&password=\${encodeURIComponent(password)}\`);
+        const data = await res.json();
+        if(data.ok){
+          const u={ name:String(login), login:String(login), token:data.token };
+          this.save(u);
+          this._heartbeat();
+          return true;
+        }
+        if(!data.ok && data.error==='expired'){
+          notify('Срок доступа истёк. Свяжитесь с администратором.','error'); return false;
+        }
+        notify('Неверный телефон или пароль.','error'); return false;
+      },
+
+      async verify(){
+        const u=this.user; if(!u) return false;
+        try{
+          const ctrl = new AbortController(); const t = setTimeout(()=>ctrl.abort(), 6000);
+          const res = await fetch(\`\${SESS_URL}?action=verify&login=\${encodeURIComponent(u.login)}&token=\${encodeURIComponent(u.token)}\`, {signal:ctrl.signal, cache:'no-store'});
+          clearTimeout(t);
+          const data = await res.json();
+          return data.ok===true ? true : null;
+        }catch{ return null; }
+      },
+
+      async logout(){
+        const u=this.user; if(u){ try{ await fetch(\`\${SESS_URL}?action=logout&login=\${encodeURIComponent(u.login)}&token=\${encodeURIComponent(u.token)}\`);}catch{} }
+        this.clear();
+      },
+
+      _heartbeat(){
+        if(this.hb) clearInterval(this.hb);
+        (async ()=>{
+          const u=this.user; if(!u) return;
+          try{ await fetch(\`\${SESS_URL}?action=heartbeat&login=\${encodeURIComponent(u.login)}&token=\${encodeURIComponent(u.token)}\`); }catch{}
+        })();
+        this.hb = setInterval(async ()=>{
+          const u=this.user; if(!u) return;
+          try{ await fetch(\`\${SESS_URL}?action=heartbeat&login=\${encodeURIComponent(u.login)}&token=\${encodeURIComponent(u.token)}\`);}catch{}
+        }, 20000);
+      }
+    };
+
+    const Comments = {
+      async list(videoId){
+        const all = await Sheets.comments();
+        return all.filter(c=> String(c.video_id)===String(videoId));
+      },
+      async add(videoId, user, text){
+        const url = \`\${COMMENT_URL}?action=add&video_id=\${encodeURIComponent(videoId)}&user=\${encodeURIComponent(user)}&comment=\${encodeURIComponent(text)}\`;
+        try{ const r=await fetch(url); const j=await r.json(); return j.status==='success'; }catch{ return false; }
+      },
+      async listPublic(limit=12){
+        const all = await Sheets.comments();
+        return all.slice(0, limit);
+      }
+    };
+
+    /* =========================================================
+       STORE: cached state
+    ========================================================= */
+    const Store = {
+      modules: null,
+      lessonsAll: null,
+      lessonsTime: 0,
+
+      async getModulesWithCounts(){
+        if(!this.modules || !this.lessonsAll){
+          const [mods, les] = await Promise.all([Sheets.modules(), Sheets.lessons()]);
+          this.modules = mods; this.lessonsAll = les; this.lessonsTime = Date.now();
+        }
+        const counts = this.lessonsAll.reduce((a,l)=>{ const m=String(l.module_id); a[m]=(a[m]||0)+1; return a; },{});
+        return { modules:this.modules, counts };
+      },
+
+      async getLessons(moduleId, force=false){
+        const stale = !this.lessonsAll || (Date.now()-this.lessonsTime>2*60*1000);
+        if(force || stale){ this.lessonsAll = await Sheets.lessons(); this.lessonsTime = Date.now(); }
+        return this.lessonsAll.filter(x=> String(x.module_id)===String(moduleId));
+      },
+
+      getAllLessons(){ return this.lessonsAll||[]; }
+    };
+
+    /* =========================================================
+       UI: auth modal + PWA + headers
+    ========================================================= */
+    const UI = {
+      modal: null,
+      openModal(){
+        if(!this.modal) this.modal = qs('#authModal');
+        this.modal.classList.add('active'); document.body.style.overflow='hidden';
+      },
+      closeModal(){
+        if(!this.modal) this.modal = qs('#authModal');
+        this.modal.classList.remove('active'); document.body.style.overflow='';
+      },
+
+      applyUserChip(){
+        const u = Session.user;
+        const show = (selName,selChip)=>{
+          const chip = qs(selChip); const name = qs(selName);
+          if(!chip || !name) return;
+          if(u){ chip.style.display='flex'; name.textContent=u.name; }
+          else { chip.style.display='none'; }
+        };
+        show('#chipName','#chipUser');
+        show('#chipName2','#chipUser2');
+        show('#chipName3','#chipUser3');
+
+        const b1=qs('#btnLogin'), b2=qs('#btnLogin2'), b3=qs('#btnLogin3');
+        if(u){
+          if(b1) b1.style.display='none';
+          if(b2) b2.style.display='none';
+          if(b3) b3.style.display='none';
+        }else{
+          if(b1) b1.style.display='inline-flex';
+          if(b2) b2.style.display='inline-flex';
+          if(b3) b3.style.display='inline-flex';
+        }
+      },
+
+      pwaInit(){
+        let deferred = null;
+        const btn = qs('#btnInstall');
+        window.addEventListener('beforeinstallprompt', (e)=>{
+          e.preventDefault();
+          deferred=e; if(btn) btn.style.display='inline-flex';
+        });
+        btn?.addEventListener('click', async ()=>{
+          if(deferred){
+            deferred.prompt();
+            await deferred.userChoice;
+            deferred=null;
+          } else if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !(window.matchMedia('(display-mode: standalone)').matches || navigator.standalone)){
+            const hint = document.createElement('div');
+            hint.className='toast info in'; hint.style.left='50%'; hint.style.transform='translateX(-50%)';
+            hint.textContent='На iPhone: Поделиться → На экран «Домой»';
+            document.body.appendChild(hint);
+            setTimeout(()=>{ hint.classList.remove('in'); setTimeout(()=>hint.remove(),300); }, 3800);
+          }
+        });
+        if(/iphone|ipad|ipod/i.test(navigator.userAgent) && !(window.matchMedia('(display-mode: standalone)').matches || navigator.standalone)){
+          if(btn) btn.style.display='inline-flex';
+        }
+      }
+    };
+
+    // Service Worker (PWA)
+    if('serviceWorker' in navigator){
+      addEventListener('load', ()=> navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+    }
+
+    /* =========================================================
+       ROUTER
+    ========================================================= */
+    const Router = {
+      go(hash){ window.location.hash = hash; },
+      parse(){
+        const h = window.location.hash || '#/';
+        const [path, query] = h.split('?');
+        const params = new URLSearchParams(query||'');
+        return { path, params };
+      },
+      async render(){
+        const {path, params} = this.parse();
+        Loader.show();
+        qsa('.page').forEach(p=> p.classList.remove('active'));
+
+        try{
+          if(path==='#/' || path==='#/modules' || path==='#/about' || path==='#/contacts'){
+            const page = qs('#page-home');
+            page.classList.add('active');
+            if(path==='#/modules'){
+              await sleep(60);
+              qs('#modulesGrid')?.scrollIntoView({behavior:'smooth', block:'start'});
+            }
+            if(path==='#/contacts'){
+              await sleep(60);
+              document.documentElement.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+            }
+            return;
+          }
+
+          if(path==='#/lessons'){
+            const page = qs('#page-lessons');
+            page.classList.add('active');
+            const moduleId = params.get('moduleId');
+            const moduleName = decodeURIComponent(params.get('moduleName')||'Модуль');
+
+            const cont = qs('#lessonsGrid');
+            if(cont && !cont.children.length){
+              cont.innerHTML = '<div class="card" style="padding:30px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Уроки загружаются…</div>';
+            }
+            await Pages.Lessons.render(moduleId, moduleName);
+            return;
+          }
+
+          if(path==='#/lesson'){
+            const page = qs('#page-lesson');
+            page.classList.add('active');
+            const frame = qs('#lessonFrame');
+            if(frame && !frame.src) frame.src = 'about:blank';
+            const moduleId = params.get('moduleId');
+            const lessonId = params.get('lessonId');
+            await Pages.Lesson.render(moduleId, lessonId);
+            return;
+          }
+
+          if(path==='#/payment'){
+            const page = qs('#page-payment');
+            page.classList.add('active');
+            const moduleId = params.get('moduleId');
+            const moduleName = decodeURIComponent(params.get('moduleName')||'Модуль');
+            await Pages.Payment.render(moduleId, moduleName);
+            return;
+          }
+
+          qs('#page-home').classList.add('active');
+        } finally {
+          Loader.hide();
+        }
+      }
+    };
+
+    /* =========================================================
+       PAGES
+    ========================================================= */
+    const Pages = {
+      Home: {
+        async renderModules(){
+          const cont = qs('#modulesGrid');
+          cont.innerHTML = '<div class="card" style="padding:30px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Модули загружаются…</div>';
+          try{
+            const {modules, counts} = await Store.getModulesWithCounts();
+            cont.innerHTML = '';
+            modules.forEach((m)=>{
+              const count = counts[String(m.id)] || 0;
+              const cover = m.cover_url || m.cover || m.image || m.photo || '';
+              const card = document.createElement('div');
+              card.className='card';
+              card.innerHTML = \`
+                <div class="card-h">
+                  \${cover
+                    ? \`<img src="\${cover}" alt="Обложка модуля \${m.name}" class="module-cover"/>\`
+                    : '<div class="cover-placeholder"><i class="fas fa-leaf"></i></div>'}
+                  <div class="card-h-overlay">
+                    <div class="module-tag"><i class="fas fa-spa"></i> Модуль \${m.id}</div>
+                    <div class="lesson-num">\${count}</div>
+                  </div>
+                </div>
+                <div class="card-b">
+                  <h3>\${m.name}</h3>
+                  <p>\${m.description||''}</p>
+                  <div class="meta">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Уроков в модуле: \${count}</span>
+                  </div>
+                  <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;">
+                    <a class="btn btn-primary" href="#/lessons?moduleId=\${encodeURIComponent(m.id)}&moduleName=\${encodeURIComponent(m.name)}">
+                      <i class="fas fa-book-open"></i> Открыть программу
+                    </a>
+                    <a class="btn btn-soft" href="#/payment?moduleId=\${encodeURIComponent(m.id)}&moduleName=\${encodeURIComponent(m.name)}">
+                      <i class="fas fa-unlock-alt"></i> Получить доступ
+                    </a>
+                  </div>
+                </div>
+              \`;
+              cont.appendChild(card);
+            });
+          }catch(e){
+            cont.innerHTML = '<div class="card" style="padding:30px; text-align:center; color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Не удалось загрузить модули</div>';
+          }
+        },
+
+        async renderPublicComments(){
+          const list = qs('#publicComments');
+          list.innerHTML = '<div class="card" style="padding:30px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Отзывы загружаются…</div>';
+          try{
+            const items = await Comments.listPublic(12);
+            if(!items.length){
+              list.innerHTML = '<div class="card" style="padding:30px; text-align:center;">Пока нет отзывов. Вы можете стать первым!</div>';
+              return;
+            }
+            list.innerHTML = '';
+            items.forEach(c=>{
+              const el = document.createElement('div');
+              el.className='comment';
+              el.innerHTML = \`
+                <div class="a"><i class="fas fa-user" style="color:#16a34a;"></i> <span style="filter: blur(1.2px);">\${c.user||'Аноним'}</span></div>
+                <div class="t">\${c.comment||''}</div>
+              \`;
+              list.appendChild(el);
+            });
+          }catch{
+            list.innerHTML = '<div class="card" style="padding:30px; text-align:center; color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Не удалось загрузить отзывы</div>';
+          }
+        }
+      },
+
+      Lessons: {
+        _moduleId:null, _lessons:[],
+
+        async render(moduleId, moduleName){
+          this._moduleId = moduleId;
+          qs('#lessonsModuleTitle').textContent = \`Уроки модуля «\${moduleName}»\`;
+          qs('#lessonsModuleDesc').textContent  = 'Выберите урок и следуйте за рекомендациями доктора.';
+
+          const cont = qs('#lessonsGrid');
+          const user = Session.user;
+          if(!user){
+            cont.innerHTML = \`
+              <div class="card" style="padding:26px; text-align:center;">
+                <div style="font-size:40px; margin-bottom:8px; color:#0f766e;"><i class="fas fa-lock"></i></div>
+                <p style="font-size:1rem; font-weight:700; margin:0 0 6px;">Онлайн-доступ только для клиентов</p>
+                <p style="margin:0 0 10px; font-size:.93rem; color:#4b5563;">
+                  Чтобы увидеть все уроки и записи доктора, сначала войдите или напишите администратору в WhatsApp.
+                </p>
+                <div style="margin-top:10px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                  <button class="btn btn-primary" id="ctaLogin"><i class="fas fa-sign-in-alt"></i> Войти</button>
+                  <a class="btn btn-green" href="https://wa.me/77778874427" target="_blank" rel="noopener">
+                    <i class="fab fa-whatsapp"></i> Написать в WhatsApp
+                  </a>
+                </div>
+              </div>\`;
+            qs('#ctaLogin')?.addEventListener('click', ()=> UI.openModal());
+            return;
+          }
+
+          cont.innerHTML = '<div class="card" style="padding:30px; text-align:center;"><i class="fas fa-spinner fa-spin"></i> Уроки загружаются…</div>';
+          const ok = await Session.verify();
+          if(ok===false){
+            notify('Доступ не подтверждён сервером. При необходимости обновите подписку.','info');
+          }
+
+          try{
+            const ls = await Store.getLessons(moduleId);
+            this._lessons = ls;
+            if(!ls.length){
+              cont.innerHTML = '<div class="card" style="padding:30px; text-align:center;"><i class="fas fa-video"></i> Уроки пока не добавлены</div>';
+              return;
+            }
+            cont.innerHTML='';
+            ls.forEach((l,i)=>{
+              const url = (l.video_url || l.video || '').trim();
+              let embed='';
+              if(isYoutube(url)){ embed=ytEmbed(url); }
+              else if(driveId(url)){ embed=driveEmbed(url); }
+
+              const pdfBtn = l.pdf_url
+                ? \`<a class="btn btn-soft" href="\${pdfPreview(l.pdf_url)}" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i> Материалы</a>\`
+                : '';
+
+              const card = document.createElement('div');
+              card.className='card';
+              card.innerHTML = \`
+                <div class="card-h">
+                  <div class="cover-placeholder"><i class="fas fa-hands"></i></div>
+                  <div class="card-h-overlay">
+                    <div class="module-tag"><i class="fas fa-seedling"></i> Урок \${i+1}</div>
+                    <div class="lesson-num">\${i+1}</div>
+                  </div>
+                </div>
+                <div class="card-b">
+                  <h3>\${l.name||'Урок'}</h3>
+                  <p>\${l.description||''}</p>
+                  <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;">
+                    \${embed
+                      ? \`<a class="btn btn-primary" href="#/lesson?moduleId=\${encodeURIComponent(moduleId)}&lessonId=\${encodeURIComponent(l.id)}"><i class="fas fa-play-circle"></i> Смотреть</a>\`
+                      : '<button class="btn btn-outline" disabled><i class="fas fa-ban"></i> Видео пока нет</button>'}
+                    \${pdfBtn}
+                  </div>
+                </div>
+              \`;
+              cont.appendChild(card);
+            });
+          }catch(e){
+            cont.innerHTML = '<div class="card" style="padding:30px; text-align:center; color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Не удалось загрузить уроки</div>';
+          }
+        }
+      },
+
+      Lesson: {
+        _moduleId:null, _lessonId:null, _ordered:[], _index:0,
+
+        _buildEmbed(url){
+          if(isYoutube(url)) return {src: ytEmbed(url), ext:url};
+          if(driveId(url))  return {src: driveEmbed(url), ext: driveView(url)};
+          return {src:'', ext:''};
+        },
+        _orderByIndex(lessons){ return lessons; },
+        _findIndex(lessons, lessonId){ return lessons.findIndex(x=> String(x.id)===String(lessonId)); },
+
+        _setNavState(){
+          qs('#btnPrev').disabled = this._index<=0;
+          qs('#btnNext').disabled = this._index>=this._ordered.length-1;
+        },
+
+        _open(idx){
+          this._index = Math.max(0, Math.min(idx, this._ordered.length-1));
+          const l = this._ordered[this._index];
+          const url = (l.video_url || l.video || '').trim();
+          const {src, ext} = this._buildEmbed(url);
+
+          qs('#lessonTitle').textContent = l.name || 'Урок';
+          qs('#lessonDesc').textContent  = l.description || '';
+          const ifr = qs('#lessonFrame'); ifr.src = src || 'about:blank';
+
+          const pdf = qs('#btnPdf');
+          const extBtn = qs('#btnExternal');
+
+          if(l.pdf_url){ pdf.style.display='inline-flex'; pdf.href = pdfPreview(l.pdf_url); }
+          else{ pdf.style.display='none'; pdf.removeAttribute('href'); }
+
+          if(ext){ extBtn.style.display='inline-flex'; extBtn.href = ext; }
+          else{ extBtn.style.display='none'; extBtn.removeAttribute('href'); }
+
+          this._renderComments(l.id);
+          this._setNavState();
+
+          qs('#linkBackToLessons').href =
+            \`#/lessons?moduleId=\${encodeURIComponent(this._moduleId)}&moduleName=\${encodeURIComponent(this._ordered?.[0]?.module_name||'Модуль')}\`;
+        },
+
+        async _renderComments(lessonId){
+          const list = qs('#commentsList');
+          const user = Session.user;
+          list.innerHTML = '<div style="padding:8px;"><i class="fas fa-spinner fa-spin"></i> Комментарии загружаются…</div>';
+          try{
+            const items = await Comments.list(lessonId);
+            list.innerHTML = items.length
+              ? items.map(c=>\`
+                  <div class="comment">
+                    <div class="a"><i class="fas fa-user" style="color:#16a34a;"></i> \${c.user||'Аноним'}</div>
+                    <div class="t">\${c.comment||''}</div>
+                  </div>\`).join('')
+              : '<div style="padding:8px; color:#6b7280;">Пока нет комментариев. Напишите свой вопрос или отзыв первым.</div>';
+          }catch{
+            list.innerHTML = '<div style="padding:8px; color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Не удалось загрузить комментарии</div>';
+          }
+
+          qs('#newComment').style.display = user ? 'block' : 'none';
+          qs('#needLogin').style.display  = user ? 'none'  : 'block';
+          const send = qs('#sendComment'); const input = qs('#commentInput');
+          send.onclick = async ()=>{
+            const text = (input.value||'').trim(); if(!text) return;
+            send.disabled=true; send.innerHTML='<i class="fas fa-spinner fa-spin"></i> Отправляем…';
+            const ok = await Comments.add(lessonId, user.name, text);
+            if(ok){
+              input.value='';
+              notify('Комментарий добавлен.','success');
+              await this._renderComments(lessonId);
+            }else{
+              notify('Не удалось отправить комментарий. Попробуйте ещё раз.','error');
+            }
+            send.disabled=false; send.innerHTML='<i class="fas fa-paper-plane"></i> Отправить';
+          };
+          input.onkeydown = (e)=>{ if(e.ctrlKey && e.key==='Enter'){ send.click(); } };
+        },
+
+        async render(moduleId, lessonId){
+          this._moduleId = moduleId; this._lessonId = lessonId;
+
+          const user = Session.user;
+          if(!user){
+            Router.go(\`#/lessons?moduleId=\${encodeURIComponent(moduleId)}&moduleName=\${encodeURIComponent('Модуль')}\`);
+            UI.openModal(); return;
+          }
+          const ok = await Session.verify();
+          if(ok===false){
+            notify('Доступ не подтверждён сервером. При необходимости обновите подписку.','info');
+          }
+
+          const lessons = await Store.getLessons(moduleId);
+          this._ordered = this._orderByIndex(lessons);
+          const idx = this._findIndex(this._ordered, lessonId);
+          this._open(idx>=0 ? idx : 0);
+
+          qs('#btnPrev').onclick = ()=>{ if(this._index>0){ this._open(this._index-1); } };
+          qs('#btnNext').onclick = ()=>{ if(this._index<this._ordered.length-1){ this._open(this._index+1); } };
+        }
+      },
+
+      Payment: {
+        async render(moduleId, moduleName){
+          qs('#payModule').textContent = moduleName;
+          qs('#payCourse').textContent = 'Онлайн-практики для тела';
+
+          qs('#uploadArea').onclick = ()=> notify('Функция загрузки чека включится после настройки интеграции. Пока отправьте чек в WhatsApp.','info');
+          qs('#sendReceipt').onclick = ()=>{
+            notify('Проверьте, что отправили чек в WhatsApp. Администратор подтвердит доступ.','success');
+            Router.go('#/');
+          };
+        }
+      }
+    };
+
+    /* =========================================================
+       AUTH wiring + header buttons + refresh FAB + app init
+    ========================================================= */
+    qs('#btnLogin')?.addEventListener('click', UI.openModal.bind(UI));
+    qs('#btnLogin2')?.addEventListener('click', UI.openModal.bind(UI));
+    qs('#btnLogin3')?.addEventListener('click', UI.openModal.bind(UI));
+    qs('#authClose')?.addEventListener('click', UI.closeModal.bind(UI));
+
+    qs('#authSubmit')?.addEventListener('click', async ()=>{
+      const phone = qs('#loginPhone').value.trim();
+      const pass  = qs('#loginPass').value;
+      if(!phone || !pass) return;
+      const ok = await Session.login(phone, pass);
+      if(ok){
+        UI.closeModal(); UI.applyUserChip();
+        notify('Вы успешно вошли.','success');
+        Router.render();
+      }
+    });
+
+    window.addEventListener('focus', async ()=>{
+      if(!Session.user) return;
+      const ok = await Session.verify();
+      if(ok===false){ notify('Доступ не подтверждён. При необходимости обновите подписку.','info'); }
+    });
+
+    UI.pwaInit();
+
+    (function(){
+      const btn = qs('#refreshBtn');
+      btn.addEventListener('click', ()=>{
+        btn.classList.add('spin');
+        setTimeout(()=>{ try{ location.reload(); }catch{ history.go(0); } }, 120);
+      });
+    })();
+
+    async function init(){
+      Session.load(); Session._heartbeat();
+      UI.applyUserChip();
+
+      await Pages.Home.renderModules();
+      await Pages.Home.renderPublicComments();
+
+      addEventListener('hashchange', ()=> Router.render());
+      await Router.render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
